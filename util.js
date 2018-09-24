@@ -147,15 +147,50 @@ exports.test =function(code,cb) {
             }, function(err, result) {
 
                 var section_info =[];
+                //7450-010-5429 cutoff
 
-                /*for(var i=0;i<result.output.length;i++) {
+                for(var i=0;i<result.output.length;i++) {
 
-                    section_info.push();
-                }*/
+                    var tmp = {
+                        'item-code' : result.output[2].text.trim(),
+                        'item-type' : result.output[4].text.trim(),
+                        'length' : result.output[6].text.trim(),
+                        'kind' : result.output[8].text.trim(),
+                        'name' : result.output[10].text.trim(),
+                        'brand' : result.output[12].text.trim(),
+                        'model' : result.output[14].text.trim(),
+                        'serial' : result.output[16].text.trim(),
+                        'warranty' : result.output[18].text.trim(),
+                        'price' : ((result.output[20].text.replace(/\n|\r/g, "")).trim()).replace(/บาท/, ""),
+                        'unit' : (result.output[22].text.replace(/\n|\r/g, "")).trim(),
+                        'organization' : result.output[26].text.trim(),
+                        'room' : result.output[32].text.trim(),
+                        'procurement' : [{
+                            'method':result.output[34].text.trim(),
+                            'source':result.output[36].text.trim(),
+                            'year':result.output[38].text.trim().trim(),
+                            'docno_withdraw':result.output[40].text.trim(),
+                            'owner_withdraw':result.output[42].text.trim(),
+                            'contact_no':result.output[44].text.trim(),
+                            'contact_date':result.output[46].text.trim(),
+                            'received_date':result.output[48].text.trim(),
+                            'vender':result.output[50].text.replace(/\n|\r/g, "").trim(),
+                            'doc_invoice':result.output[52].text.trim()
+                        }],
+                        'status' : result.output[54].text.trim(),
+                        'appearance' : result.output[56].text.trim(),
+                        'holder' : result.output[58].text.trim(),
+                        'reference' : result.output[60].text.trim()
+                    }
 
+
+                }
+
+                //section_info.push(tmp);
 
                 //console.log("section_info :"+tmpSchedule);
                 cb(result);//section_info
+                //cb(section_info);
             });
 
         });
