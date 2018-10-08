@@ -8,5 +8,6 @@ go to upzip directory and cmd type : npm install
 <br/>   eg. <a href='http://localhost:3000/api/item/7430-006-118' target='_blank'> http://localhost:3000/api/item/7430-006-118 </a><br/>   
 2.http://localhost:3000/scan  
 # Return json 
-1.Result for test 1. url : <a href='https://github.com/kantinanm/reg-schedule/blob/master/result.json' target='_blank'>result.json</a>
+1.Result for test 1. url : <a href='https://github.com/kantinanm/inventory-api/blob/master/result.json' target='_blank'>result.json</a>
 <br/>2.Result for test 
+<img source="https://github.com/kantinanm/inventory-api/blob/master/public/img/scan_html.png" />
