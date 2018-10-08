@@ -13,12 +13,16 @@ app.get('/', function(req, res) {
     res.sendFile('public/index.html', { root: __dirname });
 });
 
+app.get('/scan', function(req, res) {
+    res.sendFile('public/scan.html', { root: __dirname });
+});
+
 app.get('/api/item/:code', function (req, res) {
     //for test
     console.log("code:"+req.params.code);
     util.callItemData(req.params.code,function(result) {
 
-        //res.json(result);
+        res.json(result);
         console.log(result);
     });
 

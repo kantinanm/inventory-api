@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ECPE Inventory App</title>
+      <meta name="apple-mobile-web-app-capable" content="yes"/>
+      <link rel="stylesheet" type="text/css" href="public/js/Semantic-UI-CSS/semantic.css">
+
+
+      <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
+      <link href="public/css/bootstrap.min.css" rel="stylesheet">
+      <style type="text/css">
+          body{
+              font-family:'Kanit', sans-serif
+          }
+          .markFont{
+              font-family: 'Kanit', sans-serif;
+              /*font-size: 20px;*/
+          }
+      </style>
+
+
+      <script src="public/jquery/jquery-3.1.1.min.js"></script>
+      <script src="public/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="public/js/instascan.min.js"></script>
+		
+  </head>
+  <body>
+
+  <h2 class="ui center aligned icon header">
+      <i class="circular dolly flatbed icon"></i>
+      <span class="markFont">ECPE Inventory App</span>
+  </h2>
+  <div class="ui placeholder segment">
+      <div class="ui two column stackable center aligned grid">
+          <div class="ui vertical divider">SCAN Or</div>
+          <div class="middle aligned row">
+              <div class="column">
+                      <video   id="preview"></video>
+              </div>
+
+              <div class="column">
+                  <div class="" id="loadingDiv">
+                      <div class="ui icon header">
+                          <i class="search icon"></i>
+                          <span class="markFont"> ค้นหาจากเลขครุภัณฑ์</span>
+                      </div>
+                      <div class="field">
+                          <input type="hidden" id="hidIsFound" name="hidIsFound" value="0">
+                          <div class="ui search">
+                              <div class="ui icon input">
+                                  <input class="prompt" id="txtCode" type="text" placeholder="หมายเลขครุภัณฑ์...">
+                                  <i class="inverted circular search link icon"></i>
+                              </div>
+                              <div class="results"></div>
+                          </div>
+                      </div>
+                  </div>
+             </div>
+
+      </div>
+    </div>
+
+      <div class="container">
+          <!-- Example row of columns -->
+          <div class="row">
+              <div class="col-md-8">
+
+              </div>
+              <div class="col-md-4">
+                  <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal" id="btnDetail" style="display:none">Modal</button>
+              </div>
+          </div>
+      </div>
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+
+          <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title">รายละเอียดครุภัณฑ์ <span id="labelStatus" style="color: red;display: none">ตัดจำหน่าย</span></h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <div class="ui fluid image" id="cornerLabel" style="display: none">
+                          <a class="ui red right corner label">
+                          </a>
+                      </div>
+                  </div>
+                  <div class="modal-body">
+
+                      <div class="row"><!--row1-->
+                          <div class="col-md-4" >
+                              <span style="font-size:18px;color:#F00">ชื่อ : </span>
+                          </div>
+                          <div class="col-md-8">
+                              <span><div id="assetname"></div></span>
+                          </div>
+                      </div><!--row1-->
+
+                      <div class="row"><!--row2-->
+                          <div class="col-md-4" >
+                              <span style="font-size:18px;color:#F00">ประเภท  : </span>
+                          </div>
+                          <div class="col-md-8">
+                              <span><div id="asset_type"></div></span>
+                          </div>
+                      </div><!--row2-->
+
+
+
+                      <div class="row"><!--row3-->
+                          <div class="col-md-4" >
+                              <span style="font-size:18px;color:#F00">ชนิด  : </span>
+                          </div>
+                          <div class="col-md-8">
+                              <span><div id="asset_kind"></div></span>
+                          </div>
+                      </div><!--row3-->
+
+                      <div class="row"><!--row3-->
+                          <div class="col-md-3" >
+                              <span style="font-size:18px;color:#F00">ยี่ห้อ  : </span>
+                          </div>
+                          <div class="col-md-3">
+                              <span><div id="brand"></div></span>
+                          </div>
+                          <div class="col-md-2" >
+                              <span style="font-size:18px;color:#F00">Model  : </span>
+                          </div>
+                          <div class="col-md-3">
+                              <span><div id="model"></div></span>
+                          </div>
+                      </div><!--row3-->
+
+                      <div class="row"><!--row3-->
+                          <div class="col-md-3" >
+                              <span style="font-size:18px;color:#F00">Serial  : </span>
+                          </div>
+                          <div class="col-md-3">
+                              <span><div id="serial"></div></span>
+                          </div>
+                          <div class="col-md-2" >
+                              <span style="font-size:18px;color:#F00">ราคา  : </span>
+                          </div>
+                          <div class="col-md-3">
+                              <span><div id="price"></div></span>
+                          </div>
+                      </div><!--row3-->
+
+                      <div class="row"><!--row4-->
+                          <div class="col-sm-12">
+                              <hr/>
+                          </div>
+                      </div><!--row4-->
+                      <div class="row"><!--row4-->
+                          <div class="col-sm-6" >
+                              <span style="font-size:24px;color:#090">หมายเลขครุภัณฑ์  : </span>
+                          </div>
+                          <div class="col-sm-6">
+                              <span><div id="item_code"></div></span>
+                          </div>
+                      </div><!--row4-->
+
+
+
+                      <div class="row"><!--row4-->
+                          <div class="col-sm-12">
+                              <hr/>
+                          </div>
+                      </div><!--row4-->
+
+                      <div class="row"><!--row3-->
+                          <div class="col-md-6" >
+                              <span style="font-size:18px;color:#F00">หน่วยงาน  : </span>
+                          </div>
+                          <div class="col-md-6">
+                              <span><div id="organization"></div></span>
+                          </div>
+                      </div><!--row3-->
+
+                      <div class="row"><!--row3-->
+                          <div class="col-md-6" >
+                              <span style="font-size:18px;color:#F00">ผู้รับผิดชอบใน inventory.nu : </span>
+                          </div>
+                          <div class="col-md-6">
+                              <span><div id="holder"></div></span>
+                          </div>
+                      </div><!--row3-->
+
+                      <div class="row"><!--row3-->
+                          <div class="col-md-6" >
+                              <span style="font-size:18px;color:#F00">สถานที่เก็บ : </span>
+                          </div>
+                          <div class="col-md-6">
+                              <span><div id="room"></div></span>
+                          </div>
+                      </div><!--row3-->
+
+                  </div> <!--modal-body-->
+
+                  <div class="modal-footer">
+                      <!--  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                      <button type="button" id="btnCheckList" class="btn btn-info" data-dismiss="modal" onclick="updateCheckList()" > <i class="cart arrow down icon"></i> บันทึก </button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearModal()" >Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Modal -->
+
+
+      <script type="text/javascript">
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+      scanner.addListener('scan', function (content) {
+          $("#txtCode").val(content);
+
+          $.ajax
+          ({
+              type: "GET",
+              url: "http://localhost:3000/api/item/"+$("#txtCode").val(),
+              dataType: 'json',
+              contentType : 'application/json; charset=utf-8',
+              //json object to sent to the authentication url
+              success: function (data) {
+
+                  //alert("Thanks!");
+                  console.log(data);
+
+
+                  if(data.length==1){
+                      $("#hidIsFound").val(1);
+                      $("#txtCode").attr("disabled","disabled");
+                      console.log("Found "+data);
+                      console.log("- hidIsFound :"+$("#hidIsFound").val());
+                      $("#item_code").html(data[0].item_code);
+                      $("#assetname").html(data[0].name);
+                      $("#asset_type").html(data[0].item_type);
+                      $("#asset_kind").html(data[0].kind);
+                      $("#brand").html(data[0].brand);
+                      $("#model").html(data[0].model);
+                      $("#serial").html(data[0].serial);
+                      $("#price").html(data[0].price);
+
+                      $("#organization").html(data[0].organization);
+                      $("#holder").html(data[0].holder);
+                      $("#room").html(data[0].room);
+
+
+                      if(data[0].status=="จำหน่าย"){
+                          $("#labelStatus").show();
+                          $("#cornerLabel").show();
+                      }else{
+                          $("#labelStatus").hide();
+                          $("#cornerLabel").hide();
+                      }
+
+                      $('#btnDetail').trigger( "click" );
+
+                  }else{
+                      console.log("Notfound ");
+                      $("#txtCode").val(""); //clear
+                  }
+
+                  clearLoading();
+              }
+          })
+          //$("#hidIsFound").blur();
+         // $('#txtCode').trigger( "focusout" );
+        console.log(content);
+      });
+      Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
+        }
+      }).catch(function (e) {
+        console.error(e);
+      });
+    </script>
+      <script type="text/javascript">
+
+          jQuery(document).ready(function( $ ) {
+              console.log("Loading");
+
+          });
+
+          $("#txtCode")
+              .focusout(function() {
+                  console.log("on blur "+$("#txtCode").val());
+                  console.log("lenght :"+$("#txtCode").val().length);
+                  console.log(" ajax hidIsFound :"+$("#hidIsFound").val());
+                  if($("#txtCode").val().length>0 & $("#hidIsFound").val()==0){
+                      //$("#loadingDiv").addClass("ui loading form");
+                      //setTimeout(function(){ clearLoading(); }, 3000);
+
+                      $.ajax
+                      ({
+                          type: "GET",
+                          url: "http://localhost:3000/api/item/"+$("#txtCode").val(),
+                          dataType: 'json',
+                          contentType : 'application/json; charset=utf-8',
+                          //json object to sent to the authentication url
+                          success: function (data) {
+
+                              //alert("Thanks!");
+                              console.log(data);
+
+
+                              if(data.length==1){
+                                  $("#hidIsFound").val(1);
+                                  $("#txtCode").attr("disabled","disabled");
+                                  console.log("Found "+data);
+                                  console.log("- hidIsFound :"+$("#hidIsFound").val());
+                                  $("#item_code").html(data[0].item_code);
+                                  $("#assetname").html(data[0].name);
+                                  $("#asset_type").html(data[0].item_type);
+                                  $("#asset_kind").html(data[0].kind);
+                                  $("#brand").html(data[0].brand);
+                                  $("#model").html(data[0].model);
+                                  $("#serial").html(data[0].serial);
+                                  $("#price").html(data[0].price);
+
+                                  $("#organization").html(data[0].organization);
+                                  $("#holder").html(data[0].holder);
+                                  $("#room").html(data[0].room);
+
+
+                                  if(data[0].status=="จำหน่าย"){
+                                      $("#labelStatus").show();
+                                      $("#cornerLabel").show();
+                                  }else{
+                                      $("#labelStatus").hide();
+                                      $("#cornerLabel").hide();
+                                  }
+
+                                  $('#btnDetail').trigger( "click" );
+
+                              }else{
+                                  console.log("Notfound ");
+                                  $("#txtCode").val(""); //clear
+                              }
+
+                              clearLoading();
+                          }
+                      })
+
+
+                  }else{
+                      console.log("Please input code or clear last state hidIsFound");
+                  }
+
+              });
+
+
+      </script>
+      <script type="text/javascript">
+          function clearLoading(){
+          //alert("Clear");
+          $("#loadingDiv").removeClass("ui loading form");
+
+          }
+
+          function clearModal(){
+              $("#assetname").html("");
+              $("#asset_type").html("");
+              $("#asset_kind").html("");
+              $("#brand").html("");
+              $("#model").html("");
+              $("#serial").html("");
+              $("#price").html("");
+              $("#item_code").html("");
+              $("#organization").html("");
+              $("#holder").html("");
+              $("#room").html("");
+
+              $("#hidIsFound").val(0);
+              $('#txtCode').removeAttr("disabled");
+              $('#txtCode').val("");
+              console.log("clearModal");
+          }
+
+          function updateCheckList(){
+              //set data to db
+
+              clearModal();
+          }
+      </script>
+        <script src="public/js/Semantic-UI-CSS/semantic.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+  </body>
+</html>
