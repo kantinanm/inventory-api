@@ -10,4 +10,5 @@ go to upzip directory and cmd type : npm install
 # Return json 
 1.Result for test 1. url : <a href='https://github.com/kantinanm/inventory-api/blob/master/result.json' target='_blank'>result.json</a>
 <br/>2.Result for test 
-<img source="https://github.com/kantinanm/inventory-api/blob/master/public/img/scan_html.png" />
+![img](https://raw.githubusercontent.com/kantinanm/inventory-api/master/public/img/scan_html.png)
+
